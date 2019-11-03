@@ -1,0 +1,22 @@
+<h2>Stacja</h2>
+
+<select [(ngModel)]="choosenStation" (change)="load()">
+    <option *ngFor="let oneStation of allStation">{{oneStation}}</option>
+</select>
+
+<input type="number" [(ngModel)]="year" (change)="load()" placeholder="rok"/>
+
+<div *ngIf="content && !errorMsg">
+   <label>Stężenie NO2</label> {{content.NO2}} 
+
+   <label>Stężenie SO2</label> {{content.SO2}}
+
+   <label>Opady</label> {{content.RAIN}}
+
+   <label>Temperatura</label> {{content.TEMP}}
+
+</div>
+
+<div *ngIf="errorMsg">
+    {{errorMsg}}
+</div>
