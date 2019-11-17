@@ -1,6 +1,7 @@
 from enum import Enum
 
 import pandas as pd
+import json
 
 
 class Stations(Enum):
@@ -31,16 +32,20 @@ class Columns(Enum):
     station = "station"
 
 
-class StationInfo:
-    name = ""
-    SO2 = 0
-    NO2 = 0
-    TEMP = 0
-    RAIN = 0
-
+class StationYearInfo:
     def __init__(self, name, df, year):
         self.name = name
-        means = df[df[Columns.year.value] == int(year)].mean()
+        self.year = year
+        self.months = {}
+
+        oneYear = df[df[Columns.year.value] == int(year)]
+        for month in range(1, 13):
+            monthMeans = oneYear[oneYear[Columns.month.value] == int(month)].mean()
+            self.months[month]=(StationInfo(monthMeans, name))
+
+class StationInfo:
+    def __init__(self, means, name =""):
+        self.name = name
 
         self.SO2 = means[Columns.SO2.value]
         self.NO2 = means[Columns.NO2.value]
@@ -61,5 +66,10 @@ def import_dataset():
 
 
 def get_station_info(station_name, year):
+    df = AirQualityDataset[Stations[station_name]]
+    means = df[df[Columns.year.value] == int(year)].mean()
+    return StationInfo(means, station_name)
+
+def get_station_all_months_info(station_name, year):
     station_df = AirQualityDataset[Stations[station_name]]
-    return StationInfo(station_name, station_df, year)
+    return StationYearInfo(station_name, station_df, year)

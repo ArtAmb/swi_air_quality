@@ -1,0 +1,12 @@
+<h1>
+  TEST
+</h1>
+
+<div *ngFor="let chart_type of ATTRIBUTES_TO_SHOW">
+  <fusioncharts 
+   width="700" 
+   height="400" 
+   type="column2d" 
+   [dataSource]="prepareDataSource(chart_type)">
+  </fusioncharts>
+</div>

@@ -1,0 +1,9 @@
+/.apt_generated/
+/target/
+org.eclipse.*
+.classpath
+.project
+.jsdtscope
+/venv
+.idea
+/gui/angular/node_modules/

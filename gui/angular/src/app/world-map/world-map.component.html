@@ -1,0 +1,21 @@
+<p>
+  world-map works!
+</p>
+
+<h1>
+  MAPA
+</h1>
+<fusioncharts
+    width="800"
+    height="550"
+    type="beijing"
+    [dataSource]="dataSource"
+    (entityClick)= "regionClick($event)">
+</fusioncharts>
+<button (click)="tmp()">button</button>
+<div *ngIf="errorMsg">
+  {{errorMsg}}
+</div>
+<div *ngIf="choosenStationInfoLoaded">
+  <app-station-summary-charts  [content]="choosenStationInfo" ></app-station-summary-charts>
+</div>

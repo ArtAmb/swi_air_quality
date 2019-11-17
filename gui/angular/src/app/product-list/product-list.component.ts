@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Stations } from '../../model/stations';
 import { HttpClient, HttpHandler } from '@angular/common/http';
+import { StationYearInfo } from '../../model/station-info';
 
 
 @Component({
@@ -25,7 +26,6 @@ export class StationSummaryComponent implements OnInit {
     this.load();
   }
 
-
   load() {
     this.http.get("http://localhost:5000/station/info/" + this.choosenStation + "/for-year/" + this.year).subscribe(res => {
       this.content = res;
@@ -37,10 +37,3 @@ export class StationSummaryComponent implements OnInit {
     });
   }
 }
-
-
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/
