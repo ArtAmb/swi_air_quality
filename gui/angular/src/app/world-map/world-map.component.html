@@ -1,21 +1,33 @@
-<p>
-  world-map works!
-</p>
+<div class="main-container">
+  <table>
+    <tr>
+      <td>
+        <div style="width: 50%">
+          <h1>
+            MAPA
+          </h1>
 
-<h1>
-  MAPA
-</h1>
-<fusioncharts
-    width="800"
-    height="550"
-    type="beijing"
-    [dataSource]="dataSource"
-    (entityClick)= "regionClick($event)">
-</fusioncharts>
-<button (click)="tmp()">button</button>
-<div *ngIf="errorMsg">
-  {{errorMsg}}
-</div>
-<div *ngIf="choosenStationInfoLoaded">
-  <app-station-summary-charts  [content]="choosenStationInfo" ></app-station-summary-charts>
+          <fusioncharts
+            width="800"
+            height="550"
+            type="beijing"
+            [dataSource]="dataSource"
+            (entityClick)="regionClick($event)"
+          >
+          </fusioncharts>
+        </div>
+      </td>
+      <td>
+        <div style="width: 50%">
+          <div *ngIf="errorMsg">
+            {{ errorMsg }}
+          </div>
+          <div *ngIf="choosenStationInfoLoaded">
+            <app-station-summary-charts [content]="choosenStationInfo">
+            </app-station-summary-charts>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
 </div>

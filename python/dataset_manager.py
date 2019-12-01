@@ -1,4 +1,5 @@
 from enum import Enum
+# from scipy import stats as scipy_stats
 
 import pandas as pd
 import json
@@ -55,6 +56,11 @@ class StationInfo:
 
 AirQualityDataset = {}
 
+def clean(data):
+    data.dropna(how="all", axis='index', inplace=True)
+    data.dropna(how="all", axis='columns', inplace=True)
+    data.fillna(inplace=True, method="ffill")
+    data.fillna(inplace=True, method="bfill")
 
 def create_file_name(stationName):
     return "PRSA_Data_" + stationName + "_20130301-20170228.csv"
@@ -62,7 +68,8 @@ def create_file_name(stationName):
 
 def import_dataset():
     for station in Stations:
-        AirQualityDataset[station] = pd.read_csv("dataset/" + create_file_name(station.value), delimiter=",")
+        AirQualityDataset[station] = pd.read_csv("../dataset/" + create_file_name(station.value), delimiter=",")
+        clean(AirQualityDataset[station])
 
 
 def get_station_info(station_name, year):
@@ -73,3 +80,18 @@ def get_station_info(station_name, year):
 def get_station_all_months_info(station_name, year):
     station_df = AirQualityDataset[Stations[station_name]]
     return StationYearInfo(station_name, station_df, year)
+
+
+def get_correltion_info(station_name, year, attribiute1, attribiute2):
+    result_list = []
+    station_df = AirQualityDataset[Stations[station_name]]
+    oneYear = station_df[station_df[Columns.year.value] == int(year)]
+    for index, row in oneYear.iterrows():
+        result_list.append({
+            "x": row[attribiute1],
+            "y": row[attribiute2]})
+
+    return result_list
+
+# def pearson_correlation(col1, col2):
+#     print(scipy_stats.pearsonr(val1, val2)[0])

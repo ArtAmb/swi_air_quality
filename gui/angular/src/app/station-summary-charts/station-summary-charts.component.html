@@ -1,12 +1,39 @@
-<h1>
-  TEST
-</h1>
+<button (click)="setView('CHARTS')">Wykresy</button>
+<button (click)="setView('CORELATIONS')">Korelacje</button>
 
-<div *ngFor="let chart_type of ATTRIBUTES_TO_SHOW">
-  <fusioncharts 
-   width="700" 
-   height="400" 
-   type="column2d" 
-   [dataSource]="prepareDataSource(chart_type)">
-  </fusioncharts>
+<h1 *ngIf="selectedView == 'CHARTS'">Wykresy</h1>
+<h1 *ngIf="selectedView == 'CORELATIONS'">Korelacje</h1>
+
+<div *ngIf="selectedView == 'CHARTS'">
+  <div *ngFor="let chart_type of ATTRIBUTES_TO_SHOW">
+    <fusioncharts
+      width="700"
+      height="400"
+      type="column2d"
+      [dataSource]="prepareDataSource(chart_type)"
+    >
+    </fusioncharts>
+  </div>
+</div>
+
+
+<div *ngIf="selectedView == 'CORELATIONS'">
+    <select [(ngModel)]="attribiute1" (change)="changeCorelation()">
+        <option *ngFor="let attribiute of ATTRIBUTES_TO_SHOW">{{attribiute}}</option>
+    </select>
+    <select [(ngModel)]="attribiute2" (change)="changeCorelation()">
+        <option *ngFor="let attribiute of ATTRIBUTES_TO_SHOW">{{attribiute}}</option>
+    </select>    
+
+
+
+    <div *ngIf="corellationLoading">Loading...</div>
+
+    <fusioncharts *ngIf="!corellationLoading && corellationInfo != null"
+      width="700"
+      height="400"
+      type="scatter"
+      [dataSource]="prepareDataSourceForCorelation()"
+    >
+    </fusioncharts>
 </div>

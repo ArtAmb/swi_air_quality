@@ -18,6 +18,9 @@ def getStationInfo(station_name, year):
 def getStationAllMonthsInfo(station_name, year):
     return toJSON(dm.get_station_all_months_info(station_name, year))
 
+@app.route("/station/correlation/info/<station_name>/for-year/<year>/attribiutes/<attribiute1>/x/<attribiute2>")
+def getCorrelationInfo(station_name, year, attribiute1, attribiute2):
+    return toJSON(dm.get_correltion_info(station_name, year, attribiute1, attribiute2))
 
 if __name__ == "__main__":
     dm.import_dataset()
