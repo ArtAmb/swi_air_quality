@@ -70,11 +70,31 @@ export class WorldMapComponent implements OnInit {
     this.dataInfoService.refresh();
   }
 
+  private highlightStation(idx: number) {
+    console.log("highlightStation " + idx);
+    this.dataSource["data"][idx].value = 2
+  }
+
+  private unlightStation(idx: number) {
+    console.log("highlightStation " + idx);
+    this.dataSource["data"][idx].value = 1
+  }
+
   private loadStationCharts_CORE(stationName: string) {   
     this.dataService.getDataInfoForAllMonths(stationName, this.dataInfoService.year).subscribe(res => {
       console.log("OK");
       console.log(res);
-
+      console.log(stationName);
+      for(var i = 0; i < 4; ++i)
+        this.unlightStation(i);
+        
+      switch(stationName) {
+        case "CHANGPING": this.highlightStation(0); break;
+        case "DONGSI": this.highlightStation(1); break;
+        case "GUANYUAN": this.highlightStation(2); break;
+        case "GUCHENG": this.highlightStation(3); break;
+      }
+      
       this.choosenStationInfoLoaded = true;
 
       this.errorMsg = null;

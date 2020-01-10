@@ -14,7 +14,7 @@ import { DataInfoService } from './data-container';
 export class StationSummaryComponent implements OnInit {
   
   //choosenStation: Stations = Stations.CHANGPING;
-  allStation: Stations[] = [Stations.CHANGPING, Stations.DINGLING, Stations.DONGSI, Stations.GUANYUAN, Stations.GUCHENG];
+  allStation: Stations[] = [Stations.CHANGPING, Stations.DONGSI, Stations.GUANYUAN, Stations.GUCHENG];
 
   // year: Number = 2017;
 
