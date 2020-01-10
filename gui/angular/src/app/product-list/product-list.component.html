@@ -1,19 +1,28 @@
 <h2>Stacja</h2>
 
-<select [(ngModel)]="choosenStation" (change)="load()">
+<select [(ngModel)]="dataInfoService.choosenStation" (change)="load()">
     <option *ngFor="let oneStation of allStation">{{oneStation}}</option>
 </select>
 
-<input type="number" [(ngModel)]="year" (change)="load()" placeholder="rok"/>
+<input type="number" [(ngModel)]="dataInfoService.year" (change)="load()" placeholder="rok" max="2017" min="2013"/>
 
 <div *ngIf="content && !errorMsg">
-   <label>Stężenie NO2</label> {{content.NO2}} 
+   <label>Stężenie NO2</label> {{dataInfoService.data.NO2}} ug/m^3
 
-   <label>Stężenie SO2</label> {{content.SO2}}
+   <label>Stężenie SO2</label> {{dataInfoService.data.SO2}} ug/m^3
 
-   <label>Opady</label> {{content.RAIN}}
+   <label>Opady</label> {{dataInfoService.data.RAIN}} mm
 
-   <label>Temperatura</label> {{content.TEMP}}
+   <label>Temperatura</label> {{dataInfoService.data.TEMP}} *C
+
+   <label>Stężenie PM2.5</label> {{dataInfoService.data.PM25}} ug/m^3
+   <label>Stężenie PM10</label> {{dataInfoService.data.PM10}} ug/m^3
+   <label>Stężenie CO</label> {{dataInfoService.data.CO}} ug/m^3
+   <label>Stężenie O3</label> {{dataInfoService.data.O3}} ug/m^3
+   <label>Ciśnienie atmosferyczne</label> {{dataInfoService.data.PRES}} hPa
+   <label>Temperatura punktu rosy</label> {{dataInfoService.data.DEWP}} *C
+   <label>Szybkość wiatru</label> {{dataInfoService.data.WSPM}} m/s
+   
 
 </div>
 

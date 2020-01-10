@@ -20,6 +20,7 @@ import * as Charts from "fusioncharts/fusioncharts.charts";
 
 import { DataService } from './world-map/data.service';
 import { StationSummaryChartsComponent } from './station-summary-charts/station-summary-charts.component';
+import { DataInfoService } from './product-list/data-container';
 
 FusionChartsModule.fcRoot(
    FusionCharts,
@@ -52,7 +53,8 @@ FusionChartsModule.fcRoot(
       AppComponent
    ],
    providers: [
-      DataService
+      DataService,
+      DataInfoService
    ]
 })
 export class AppModule { }

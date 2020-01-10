@@ -2,6 +2,8 @@ import { NgZone, Component, OnInit } from '@angular/core';
 import { MAP_DATA_SOURCE} from './map-data-source';
 import { DataService } from './data.service';
 import { StationYearInfo } from '../../model/station-info';
+import { DataInfoService } from '../product-list/data-container';
+import { Stations } from '../../model/stations';
 @Component({
   selector: 'app-world-map',
   templateUrl: './world-map.component.html',
@@ -16,7 +18,14 @@ export class WorldMapComponent implements OnInit {
   choosenStationInfo: StationYearInfo;
 
   constructor(private zone: NgZone,
-    private dataService: DataService) {
+    private dataService: DataService,
+    private dataInfoService: DataInfoService) {
+
+      this.dataInfoService.getSubscriber().subscribe(msg => {
+        if(msg == "REFRESH") {
+          this.loadStationCharts_CORE(this.dataInfoService.choosenStation);
+        }
+      })
   }
 
   ngOnInit() {
@@ -56,7 +65,13 @@ export class WorldMapComponent implements OnInit {
 
   loadStationCharts(districtName: string) {
     var stationName = this.getStationName(districtName);
-    this.dataService.getDataInfoForAllMonths(stationName, 2015).subscribe(res => {
+    // this.loadStationCharts_CORE(stationName)
+    this.dataInfoService.choosenStation = Stations[stationName];
+    this.dataInfoService.refresh();
+  }
+
+  private loadStationCharts_CORE(stationName: string) {   
+    this.dataService.getDataInfoForAllMonths(stationName, this.dataInfoService.year).subscribe(res => {
       console.log("OK");
       console.log(res);
 

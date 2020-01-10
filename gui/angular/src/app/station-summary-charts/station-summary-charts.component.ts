@@ -20,7 +20,7 @@ export class StationSummaryChartsComponent implements OnInit {
   attribiute1: String;
   attribiute2: String;
 
-  ATTRIBUTES_TO_SHOW = ["TEMP", "RAIN", "SO2", "NO2"];
+  ATTRIBUTES_TO_SHOW = ["TEMP", "RAIN", "SO2", "NO2", "PM25", "PM10", "CO", "O3", "PRES", "DEWP", "WSPM"];
 
   constructor(private dataService: DataService) {}
 
@@ -59,7 +59,8 @@ export class StationSummaryChartsComponent implements OnInit {
     var result = [];
     for (var monthIdx = 1; monthIdx <= 12; ++monthIdx) {
       var stationInfo = this.content.months[monthIdx];
-      stationInfo[attrName];
+      if (stationInfo == null) continue;
+
       result.push({
         label: monthIdx,
         value: stationInfo[attrName]

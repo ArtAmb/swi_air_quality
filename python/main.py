@@ -11,7 +11,7 @@ def toJSON(obj):
 
 @app.route("/station/info/<station_name>/for-year/<year>")
 def getStationInfo(station_name, year):
-    return jsonify(dm.get_station_info(station_name, year).__dict__)
+    return toJSON(dm.get_station_info(station_name, year))
 
 
 @app.route("/station/info/<station_name>/for-year/<year>/all-months")

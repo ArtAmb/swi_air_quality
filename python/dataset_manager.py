@@ -1,8 +1,9 @@
 from enum import Enum
-# from scipy import stats as scipy_stats
 
 import pandas as pd
-import json
+
+
+# from scipy import stats as scipy_stats
 
 
 class Stations(Enum):
@@ -33,6 +34,13 @@ class Columns(Enum):
     station = "station"
 
 
+def create_station_info(monthMeans):
+    res = {}
+    for col in IMPORTANT_ATTRIBUTES:
+        res[col.name] = monthMeans[col.value]
+    return res
+
+
 class StationYearInfo:
     def __init__(self, name, df, year):
         self.name = name
@@ -41,26 +49,48 @@ class StationYearInfo:
 
         oneYear = df[df[Columns.year.value] == int(year)]
         for month in range(1, 13):
-            monthMeans = oneYear[oneYear[Columns.month.value] == int(month)].mean()
-            self.months[month]=(StationInfo(monthMeans, name))
+            monthDf = oneYear[oneYear[Columns.month.value] == int(month)];
+            if monthDf.shape[0] == 0:
+                continue
+            monthMeans = monthDf.mean()
+            # StationInfo(monthMeans, name)
 
-class StationInfo:
-    def __init__(self, means, name =""):
-        self.name = name
+            self.months[month] = create_station_info(monthMeans)
 
-        self.SO2 = means[Columns.SO2.value]
-        self.NO2 = means[Columns.NO2.value]
-        self.TEMP = means[Columns.TEMP.value]
-        self.RAIN = means[Columns.RAIN.value]
+
+IMPORTANT_ATTRIBUTES = [
+    Columns.TEMP,
+    Columns.RAIN,
+    Columns.SO2,
+    Columns.NO2,
+    Columns.PM25,
+    Columns.PM10,
+    Columns.CO,
+    Columns.O3,
+    Columns.PRES,
+    Columns.DEWP,
+    Columns.WSPM]
+
+# class StationInfo:
+#     def __init__(self, means, name=""):
+#         self.name = name
+
+# self.SO2 = means[Columns.SO2.value]
+# self.NO2 = means[Columns.NO2.value]
+# self.TEMP = means[Columns.TEMP.value]
+# self.RAIN = means[Columns.RAIN.value]
+#
 
 
 AirQualityDataset = {}
+
 
 def clean(data):
     data.dropna(how="all", axis='index', inplace=True)
     data.dropna(how="all", axis='columns', inplace=True)
     data.fillna(inplace=True, method="ffill")
     data.fillna(inplace=True, method="bfill")
+
 
 def create_file_name(stationName):
     return "PRSA_Data_" + stationName + "_20130301-20170228.csv"
@@ -75,7 +105,8 @@ def import_dataset():
 def get_station_info(station_name, year):
     df = AirQualityDataset[Stations[station_name]]
     means = df[df[Columns.year.value] == int(year)].mean()
-    return StationInfo(means, station_name)
+    return create_station_info(means)
+
 
 def get_station_all_months_info(station_name, year):
     station_df = AirQualityDataset[Stations[station_name]]
@@ -88,8 +119,8 @@ def get_correltion_info(station_name, year, attribiute1, attribiute2):
     oneYear = station_df[station_df[Columns.year.value] == int(year)]
     for index, row in oneYear.iterrows():
         result_list.append({
-            "x": row[attribiute1],
-            "y": row[attribiute2]})
+            "x": row[Columns[attribiute1].value],
+            "y": row[Columns[attribiute2].value]})
 
     return result_list
 
