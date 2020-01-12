@@ -7,22 +7,55 @@
 <input type="number" [(ngModel)]="dataInfoService.year" (change)="load()" placeholder="rok" max="2017" min="2013"/>
 
 <div *ngIf="content && !errorMsg">
-   <label>Stężenie NO2</label> {{dataInfoService.data.NO2}} ug/m^3
-
+   <!--<label>Stężenie NO2</label> {{dataInfoService.data.NO2}} ug/m^3
    <label>Stężenie SO2</label> {{dataInfoService.data.SO2}} ug/m^3
-
    <label>Opady</label> {{dataInfoService.data.RAIN}} mm
-
    <label>Temperatura</label> {{dataInfoService.data.TEMP}} *C
-
    <label>Stężenie PM2.5</label> {{dataInfoService.data.PM25}} ug/m^3
    <label>Stężenie PM10</label> {{dataInfoService.data.PM10}} ug/m^3
    <label>Stężenie CO</label> {{dataInfoService.data.CO}} ug/m^3
    <label>Stężenie O3</label> {{dataInfoService.data.O3}} ug/m^3
    <label>Ciśnienie atmosferyczne</label> {{dataInfoService.data.PRES}} hPa
    <label>Temperatura punktu rosy</label> {{dataInfoService.data.DEWP}} *C
-   <label>Szybkość wiatru</label> {{dataInfoService.data.WSPM}} m/s
-   
+   <label>Szybkość wiatru</label> {{dataInfoService.data.WSPM}} m/s -->
+   <table class="data-table">
+       <thead>
+       <tr>
+           <th>CZYNNIK</th>
+           <th>WARTOŚĆ</th>
+       </tr>
+       </thead>
+       <tbody>
+       <tr>
+           <td>Stężenie NO2</td>
+           <td>{{dataInfoService.data.NO2}}</td>
+       </tr>
+       <tr>
+           <td>Stężenie SO2</td>
+           <td>{{dataInfoService.data.SO2}} ug/m^3</td>
+       </tr>
+       <tr><td>Opady</td> <td>{{dataInfoService.data.RAIN}} mm</td></tr>
+       <tr><td>Temperatura</td> <td>{{dataInfoService.data.TEMP}} *C</td></tr>
+       <tr><td>Stężenie PM2.5</td><td>{{dataInfoService.data.PM25}} ug/m^3</td></tr>
+       <tr> <td>Stężenie PM10</td> <td>{{dataInfoService.data.PM10}} ug/m^3</td></tr>
+       <tr><td>Stężenie CO</td> <td>{{dataInfoService.data.CO}} ug/m^3</td></tr>
+       <tr><td>Stężenie O3</td> <td>{{dataInfoService.data.O3}} ug/m^3</td></tr>
+       <tr><td>Ciśnienie atmosferyczne</td> <td>{{dataInfoService.data.PRES}} hPa</td></tr>
+       <tr><td>Temperatura punktu rosy</td> <td>{{dataInfoService.data.DEWP}} *C</td></tr>
+       <tr><td>Szybkość wiatru</td> <td>{{dataInfoService.data.WSPM}} m/s</td></tr>
+
+
+
+
+
+
+
+
+
+
+
+       </tbody>
+   </table>
 
 </div>
 
